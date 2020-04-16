@@ -14,11 +14,7 @@ func (IterativeChopper) Chop(needle int, haystack []int) int {
 	left := 0
 	right := len(haystack)-1
 
-	for {
-		if left > right {
-			return -1
-		}
-
+	for right >= left {
 		midIndex := (left + right) / 2
 		midValue := haystack[midIndex]
 
@@ -31,4 +27,5 @@ func (IterativeChopper) Chop(needle int, haystack []int) int {
 			return midIndex
 		}
 	}
+	return -1
 }
