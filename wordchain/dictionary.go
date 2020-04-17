@@ -41,7 +41,8 @@ func (d *Dictionary) ReadFrom(r io.Reader) (int64, error) {
 	return int64(total), sc.Err()
 }
 
-// AddWord inserts a new word into the Dictionary and expands the alphabet with characters from that word.
+// AddWord inserts a new word into the Dictionary and expands the alphabet with characters from that word. It is a no-op
+// to attempt to add a word of different length than the target.
 func (d *Dictionary) AddWord(s string) {
 	if utf8.RuneCountInString(s) != d.targetLen {
 		return

@@ -2,17 +2,45 @@ package wordchain
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"sort"
 	"strings"
 	"testing"
 )
 
-// errReader is a helper io.Reader that always returns error err.
-type errReader struct {
-	err error
+func ExampleDictionary() {
+	words := []string{"dog", "cat", "cog", "cot", "apple"}
+	r := strings.NewReader(strings.Join(words, " "))
+
+	dict := NewDictionary(3)
+	_, _ = dict.ReadFrom(r)
+
+	fmt.Println("dog", dict.HasWord("dog"))
+	fmt.Println("apple", dict.HasWord("apple"))
+	// Output:
+	// dog true
+	// apple false
 }
-func (r errReader) Read(_ []byte) (int, error) { return 0, r.err }
+
+func ExampleDictionary_alphabet() {
+	words := []string{"dog", "cat"}
+	r := strings.NewReader(strings.Join(words, " "))
+
+	dict := NewDictionary(3)
+	_, _ = dict.ReadFrom(r)
+
+	for _, r := range dict.Alphabet() {
+		fmt.Println(string(r))
+	}
+	// Unordered output:
+	// a
+	// c
+	// d
+	// g
+	// o
+	// t
+}
 
 func TestDictionary_ReadFrom(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
@@ -127,3 +155,10 @@ func TestDictionary_Alphabet(t *testing.T) {
 		t.Errorf("dict.Alphabet(): got %v, want %v", got, want)
 	}
 }
+
+// errReader is a helper io.Reader that always returns error err.
+type errReader struct {
+	err error
+}
+func (r errReader) Read(_ []byte) (int, error) { return 0, r.err }
+
