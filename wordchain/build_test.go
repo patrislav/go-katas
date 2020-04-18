@@ -50,6 +50,24 @@ func TestBuild(t *testing.T) {
 			}
 		})
 	}
+
+	// pairs with multiple possible solutions (paths) are unstable - the chain might be different each iteration
+	t.Run("bear to fish", func(t *testing.T) {
+		words := []string{
+			"bear", "fish", "beat", "best", "fiat", "fist", "fest", "feat", "fear", "beak", "biak", "bisk", "bish",
+		}
+		dict := NewDictionary(4)
+		for _, w := range words {
+			dict.AddWord(w)
+		}
+		res, err := Build(dict, "bear", "fish")
+		if err != nil {
+			t.Errorf("unexpected error: %v", err)
+		}
+		if len(res) != 6 {
+			t.Errorf("expected a chain of 6 words, got %v", len(res))
+		}
+	})
 }
 
 func BenchmarkBuild(b *testing.B) {

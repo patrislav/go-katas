@@ -73,9 +73,9 @@ func (b *builder) populateNodes() {
 			if _, ok := b.nodes[word]; !ok {
 				b.nodes[word] = &node{word: word, distance: current.distance + 1}
 				if word == b.target {
-					// store the target node's similar words here, as after resetting the queue the outer loop
-					// will break
-					b.nodes[word].similar = b.similarWords(word)
+					// store only the current word in the target's similar slice, since other paths might not have been
+					// constructed at this depth in the tree
+					b.nodes[word].similar = []string{current.word}
 					q.reset()
 				} else {
 					q.enqueue(b.nodes[word])
