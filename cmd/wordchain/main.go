@@ -33,8 +33,8 @@ func main() {
 		handleError(errors.New("dictionary file is required"))
 	}
 
-	origin := flag.Arg(0)
-	target := flag.Arg(1)
+	origin := strings.ToLower(flag.Arg(0))
+	target := strings.ToLower(flag.Arg(1))
 	if len(origin) != len(target) {
 		handleError(errors.New("both words must have the same length"))
 	}
