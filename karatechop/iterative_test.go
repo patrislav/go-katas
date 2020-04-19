@@ -17,5 +17,5 @@ func TestIterativeChopper_Chop(t *testing.T) {
 }
 
 func BenchmarkIterativeChopper_Chop(b *testing.B) {
-	benchmarkChopper(RecursiveChopper{}, b)
+	benchmarkChopper(IterativeChopper{}, b)
 }
